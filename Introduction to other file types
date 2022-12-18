@@ -1,0 +1,74 @@
+------------------------------------------------\\ 
+Not so flat any more
+
+# Import pickle package
+import pickle
+
+# Open pickle file and load data: d
+with open('data.pkl', 'rb') as file: ### add second argument 'rb', "r" to denote that the file is 'read only' and "b" is for binary file.
+    d = pickle.load(file)  ### method .load() with the argument 'file'
+
+# Print d
+print(d)
+
+# Print datatype of d
+print(type(d))  ## type() to check the data type.
+
+
+------------------------------------------------\\ 
+Listing sheets in Excel files
+
+# Import pandas
+import pandas as pd
+
+# Assign spreadsheet filename: file
+file = 'battledeath.xlsx'   ### assign the xlsx file 
+
+# Load spreadsheet: xls  
+xls = pd.ExcelFile(file) ### load the spreadshee using "pd.ExcelFile()" method 
+
+# Print sheet names
+print(xls.sheet_names)   ### assign the .sheet_names to print the sheet name within the excel spreadsheet file.
+
+------------------------------------------------\\ 
+
+Importing sheets from Excel files
+
+# Load a sheet into a DataFrame by name: df1
+df1 = xls.parse('2004')   ### use .parse() method to select the sheet we need by name.
+
+# Print the head of the DataFrame df1
+print(df1.head())
+
+# Load a sheet into a DataFrame by index: df2
+df2 = xls.parse(0)  ### use .parse() with the page number to select the sheet.
+
+# Print the head of the DataFrame df2
+print(df2.head())
+
+------------------------------------------------\\ 
+
+Customizing your spreadsheet import
+
+# Parse the first sheet and rename the columns: df1
+df1 = xls.parse(0, skiprows=[0], names=['Country', 'AAM due to War (2002)']).
+
+### skiprows need the 'list' input to select which row we want to skip
+#### names the name of the columns we want to change "need to wrap in [] as a list".
+
+
+# Print the head of the DataFrame df1
+print(df1.head())
+
+# Parse the first column of the second sheet and rename the column: df2
+df2 = xls.parse(1, usecols=[0], skiprows=[0], names=['Country'])
+
+## usecols to select columns we want to use "wrap in [] to show as a list"
+### skiprows need the 'list' input to select which row we want to skip
+#### names the name of the columns we want to change "need to wrap in [] as a list".
+
+# Print the head of the DataFrame df2
+print(df2.head())
+
+
+------------------------------------------------\\ 
