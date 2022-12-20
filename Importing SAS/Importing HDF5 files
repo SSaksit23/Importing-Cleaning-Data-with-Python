@@ -1,0 +1,51 @@
+------------------------------------------\\
+Using File to import HDF5 files
+
+# Import packages
+import numpy as np
+import h5py 
+### import h5py library module. 
+
+# Assign filename: file
+file = h5py.File('LIGO_data.hdf5', 'r')
+### assign the file name with the structure : h5py.File('Filename', 'reading method')
+
+# Load file: data
+data = h5py.File('LIGO_data.hdf5', 'r')
+
+# Print the datatype of the loaded file
+print(type(data))
+
+# Print the keys of the file
+for key in data.keys():
+    print(key)
+
+------------------------------------------\\
+Extracting data from your HDF5 file
+
+# Get the HDF5 group: group
+group = data['strain']
+
+# Check out keys of group
+for key in group.keys():
+    print(key)
+
+# Set variable equal to time series data: strain
+strain = np.array(data['strain']['Strain'])
+
+### Subset the data with ['strain] and ['Strain'] 
+### change the subset data to the Numpy array by np.array() method 
+
+# Set number of time points to sample: num_samples
+num_samples = 10000
+
+# Set time vector
+time = np.arange(0, 1, 1/num_samples)
+
+# Plot data
+plt.plot(time, strain[:num_samples])
+plt.xlabel('GPS Time (s)')
+plt.ylabel('strain')
+plt.show()
+
+------------------------------------------\\
