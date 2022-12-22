@@ -1,0 +1,89 @@
+----------------------------------\\  
+Querying relational databases in Python
+
+# Import packages
+from sqlalchemy import create_engine
+import pandas as pd
+
+# Create engine: engine
+engine = create_engine('sqlite:///Chinook.sqlite')
+### create engine with the create_engine() function.
+
+# Open engine connection: con
+con = engine.connect()
+### connect the engine.
+
+# Perform query: rs
+rs = con.execute('SELECT * from Album')
+### insert SQL argument in ' ' in the method .execute()
+
+# Save results of the query to DataFrame: df
+df = pd.DataFrame(rs.fetchall())
+### Save the result while fetch all result and store in the dataFrame.
+
+# Close connection
+con.close()
+### close the connection with method .close()
+
+# Print head of DataFrame df
+print(df.head())
+
+----------------------------------\\
+Customizing the Hello World of SQL Queries
+
+# Open engine in context manager
+# Perform query and save results to DataFrame: df
+with engine.connect() as con:
+    rs = con.execute('SELECT LastName, Title FROM Employee')
+    df = pd.DataFrame(rs.fetchmany(size=3))
+    df.columns = rs.keys()
+    
+  ### use with ... as con: to curtail the code details. 
+  ### use con.execute to run the SQL code with SELECT , FROM 
+  ### limit the fetched result with the argument size.
+  ### assign the keys as a columns with .keys() method.
+
+# Print the length of the DataFrame df
+print(len(df))
+
+# Print the head of the DataFrame df
+print(df.head())
+
+
+----------------------------------\\
+Filtering your database records using SQL's WHERE
+
+# Create engine: engine
+engine = create_engine('sqlite:///Chinook.sqlite')
+
+# Open engine in context manager
+# Perform query and save results to DataFrame: df
+with engine.connect() as con:
+    rs = con.execute('SELECT * FROM Employee WHERE EmployeeID >= 6')
+    df = pd.DataFrame(rs.fetchall())
+    df.columns = rs.keys()
+    ### use SELECT, FROM with WHERE argument to filter the result we want (In this case is where the EmployeeID is more than 6)
+    
+
+# Print the head of the DataFrame df
+print(df.head())
+
+----------------------------------\\
+Ordering your SQL records with ORDER BY
+
+# Create engine: engine
+engine = create_engine('sqlite:///Chinook.sqlite')
+
+# Open engine in context manager
+with engine.connect() as con:
+    rs = con.execute('SELECT * FROM Employee ORDER BY BirthDate')
+    df = pd.DataFrame(rs.fetchall())
+    ### use con.execute to run SQL code.
+    ### use SELECT, FROM with the ODER BY to run order by the selected columns (In this case is the columns BirthDate)
+
+    # Set the DataFrame's column names
+    df.columns = rs.keys()
+
+# Print head of DataFrame
+print(df.head())
+
