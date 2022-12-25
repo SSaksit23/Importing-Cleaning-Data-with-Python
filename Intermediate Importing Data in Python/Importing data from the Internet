@@ -1,0 +1,24 @@
+-----------------------------------\\
+Importing flat files from the web: your turn!
+
+# Import package
+from urllib.request import urlretrieve
+
+# Import pandas
+import pandas as pd
+
+# Assign url of file: url
+url = 'https://assets.datacamp.com/production/course_1606/datasets/winequality-red.csv'
+
+# Save file locally
+urlretrieve(url, 'winequality-red.csv')
+### urlretrieve(arg1, filename)
+  ## arg1 : the url in the previous code.
+  ## filename: the filename we want to store in the local file directory.
+
+# Read file into a DataFrame and print its head
+df = pd.read_csv('winequality-red.csv', sep=';')
+print(df.head())
+
+-----------------------------------\\
+Opening and reading flat files from the web
