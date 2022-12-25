@@ -1,0 +1,28 @@
+-----------------------------------\\
+The power of SQL lies in relationships between tables: INNER JOIN
+
+# Open engine in context manager
+# Perform query and save results to DataFrame: df
+with engine.connect() as con:
+    rs = con.execute("SELECT Title, Name FROM Album INNER JOIN Artist on Album.ArtistID = Artist.ArtistID")
+      ### use SELECT columns Title and Name From Album data base
+      ### INNER JOIN with the Artist database on the column ArtistID : Album.ArtistID, Assign the column as ArtistID.
+          
+    df = pd.DataFrame(rs.fetchall())
+      ### use the .fetchall() method on the database and conver to DataFrame with the method pd.DataFrame.
+    df.columns = rs.keys()
+      ### Assign the columns as the keys from the database.
+
+# Print head of DataFrame df
+print(df.head())
+
+-----------------------------------\\
+FILTERING the INNER Join 
+
+# Execute query and store records in DataFrame: df
+df = pd.read_sql_query('SELECT * FROM PlaylistTrack INNER JOIN Track on PlaylistTrack.TrackId = Track.TrackId WHERE Milliseconds < 250000', engine)
+    ### use pd.read_sql_query(argu1, engine)
+      ** argu1 : the SQL query.
+      
+# Print head of DataFrame
+print(df.head())
