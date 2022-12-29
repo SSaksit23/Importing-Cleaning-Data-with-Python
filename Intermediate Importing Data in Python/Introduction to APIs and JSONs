@@ -1,0 +1,18 @@
+-----------------------------------\\
+Loading and exploring a JSON
+
+# Load JSON: json_data
+with open("a_movie.json") as json_file:
+    json_data = json.load(json_file)
+      ### open the json object by with open ('JSON file) as file_name:
+      ### load json data with method .load(JSON file) 
+
+# Print each key-value pair in json_data
+for k  in json_data.keys():
+    print(k + ': ', json_data[k])
+      ###Iteration the key with in the dictionary
+      ### concatination the key and value.
+
+-----------------------------------\\
+
+-----------------------------------\\
